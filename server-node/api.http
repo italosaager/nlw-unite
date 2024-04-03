@@ -1,0 +1,27 @@
+POST http://localhost:3333/events
+Content-Type: application/json
+
+{
+    "title": "Novo evento 2",
+    "details": null,
+    "maximumAttendees": 1
+}
+
+###
+
+POST http://localhost:3333/events/44bdb425-5fc0-4dfe-b64e-997d53bbc3aa/attendees
+Content-Type: application/json
+
+{
+    "name": "Italo Saager",
+    "email": "italosaager@gmail.com"
+}
+
+
+###
+
+GET http://localhost:3333/events/44bdb425-5fc0-4dfe-b64e-997d53bbc3aa
+
+### 
+
+GET http://localhost:3333/attendees/1/badge
