@@ -2,26 +2,35 @@ POST http://localhost:3333/events
 Content-Type: application/json
 
 {
-    "title": "Novo evento 2",
+    "title": "Novo evento 3",
     "details": null,
     "maximumAttendees": 1
 }
 
 ###
 
-POST http://localhost:3333/events/44bdb425-5fc0-4dfe-b64e-997d53bbc3aa/attendees
+POST http://localhost:3333/events/026e6727-59ae-4153-9247-67a78b753f91/attendees
 Content-Type: application/json
 
 {
-    "name": "Italo Saager",
-    "email": "italosaager@gmail.com"
+    "name": "Joaozin",
+    "email": "joaozin@gmail.com"
 }
 
 
 ###
 
-GET http://localhost:3333/events/44bdb425-5fc0-4dfe-b64e-997d53bbc3aa
+GET http://localhost:3333/events/026e6727-59ae-4153-9247-67a78b753f91
 
 ### 
 
 GET http://localhost:3333/attendees/1/badge
+
+### 
+
+GET http://localhost:3333/attendees/2/check-in
+
+
+###
+
+GET http://localhost:3333/events/026e6727-59ae-4153-9247-67a78b753f91/attendees?query=Matheus

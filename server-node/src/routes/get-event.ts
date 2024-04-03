@@ -2,16 +2,19 @@ import { FastifyInstance } from "fastify";
 import z from "zod";
 import { prisma } from "../lib/prisma";
 import { ZodTypeProvider } from "fastify-type-provider-zod";
+import { BadRequest } from "./_errors/bad-request";
 
 export async function getEvent(app: FastifyInstance) {
     app.withTypeProvider<ZodTypeProvider>()
         .get('/events/:eventId', {
             schema: {
+                summary: 'Get an event',
+                tags: ['events'],
                 params: z.object({
                     eventId: z.string().uuid()
                 }),
                 response: {
-                    200: {
+                    200: z.object({
                         event: z.object({
                             id: z.string().uuid(),
                             title: z.string(),
@@ -20,7 +23,7 @@ export async function getEvent(app: FastifyInstance) {
                             maximumAttendees: z.number().int().nullable(),
                             attendeesAmount: z.number().int(),
                         })
-                    }
+                    })
                 },
             }
         }, async (req, res) => {
@@ -44,16 +47,18 @@ export async function getEvent(app: FastifyInstance) {
                 }
             })
             if (event === null) {
-                throw new Error('Event not found.');
+                throw new BadRequest('Event not found.');
             }
 
-            return res.send({ event: {
-                id: event.id,
-                title: event.title,
-                slug: event.slug,
-                details: event.details,
-                maximumAttedees: event.maximumAttendees,
-                attendeesAmount: event._count.Attendee
-            } })
+            return res.send({
+                event: {
+                    id: event.id,
+                    title: event.title,
+                    slug: event.slug,
+                    details: event.details,
+                    maximumAttendees: event.maximumAttendees,
+                    attendeesAmount: event._count.Attendee
+                }
+            })
         })
 }
